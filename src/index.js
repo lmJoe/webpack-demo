@@ -9,6 +9,7 @@ import Createavater from './createavater';
 import style from './index.less';
 import avaterVue from './avater.vue';
 Createavater();
+
 var img = new Image();
 img.src = avater
 img.classList.add(style.avater)
