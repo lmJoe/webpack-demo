@@ -3,10 +3,11 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 module.exports = {
-  mode:'production',//不配置mode，会有警告production表示压缩 development表示没有被压缩
+  mode:'development',//不配置mode，会有警告production表示压缩 development表示开发者模式
+  // devtool:'eval-cheap-module-source-map',//将sourceMap关掉  webpack4需要设置为none webpack5需要设置为eval-cheap-module-source-map
+  devtool:'eval',
   entry:{
-    main:'./src/index.js',//项目文件开始从哪一个文件打包(如果此处已经配置了main:'./src/index.js',在出口文件配置项中即output，没有配置filename:'bundle.js',则打包出的js出口文件为main.js)
-    sub:'./src/index.js'//打两次js出口文件
+    main:'./src/index.js',
   },
   module:{
     rules:[//此处的意思为 针对静态资源后缀为jpg的图片，使用file-loader的方法进行打包
@@ -52,7 +53,6 @@ module.exports = {
     ],
   },//对模块打包进行配置
   output:{
-    publicPath:'http://cdn.com.cn',//想要将打包的两个js文件放在http://cdn.com.cn 域名中
     filename:'[name].js',//打包后生成的文件名,此处的[name]为占位符
     path:path.resolve(__dirname ,'dist'),//打出的包的路径 _dirname变量指的是webpack.config.js所在的当前目录的路径，和bundle结合 ，代码生成的文件路径就是bundle.js的路径
   },
