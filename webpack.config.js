@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
 	mode: 'development',
@@ -12,6 +13,8 @@ module.exports = {
 		contentBase: './dist',
 		open: true,
 		port: 8080,
+    hot:true,//开启热更
+    hotOnly:true
 	},
 	module: {
 		rules: [{
@@ -42,11 +45,22 @@ module.exports = {
 				'sass-loader',
 				'postcss-loader'
 			]
+		},{
+			test: /\.css$/,
+			use: [
+				'style-loader',
+				'css-loader',
+				'postcss-loader',
+			]
 		}]
 	},
-	plugins: [new HtmlWebpackPlugin({
-		template: 'src/index.html'
-	}), new CleanWebpackPlugin(['dist'])],
+	plugins: [
+    new HtmlWebpackPlugin({
+		  template: 'src/index.html'
+    }), 
+    new CleanWebpackPlugin(['dist']),
+    new webpack.HotModuleReplacementPlugin()
+  ],
 	output: {
     publicPath:'/',//表示所有打包生成的文件之间的引用前面都加一个根路径
 		filename: '[name].js',
