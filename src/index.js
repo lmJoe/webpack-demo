@@ -1,8 +1,3 @@
-require("@babel/polyfill");
-const arr = [
-  new Promise( ()=>{} ),
-  new Promise( ()=>{} )
-];
-arr.map(item => {
-  console.log(item)
-})
+//使用tree Shaking只支持ES module,也就是import模块的引入
+import { add } from './math.js';
+add(1,2)

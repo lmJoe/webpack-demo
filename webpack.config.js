@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-	mode: 'development',
+	mode: 'production',
 	devtool: 'cheap-module-eval-source-map',
 	entry: {
 		main: './src/index.js'
@@ -13,11 +13,15 @@ module.exports = {
 		contentBase: './dist',
 		open: true,
 		port: 8080,
-    hot:true,//开启热更
-    hotOnly:true
+		hot: true,
+		hotOnly: true
 	},
 	module: {
-		rules: [{
+		rules: [{ 
+			test: /\.js$/, 
+			exclude: /node_modules/, 
+			loader: 'babel-loader',
+		}, {
 			test: /\.(jpg|png|gif)$/,
 			use: {
 				loader: 'url-loader',
@@ -45,30 +49,27 @@ module.exports = {
 				'sass-loader',
 				'postcss-loader'
 			]
-		},{
+		}, {
 			test: /\.css$/,
 			use: [
 				'style-loader',
 				'css-loader',
-				'postcss-loader',
+				'postcss-loader'
 			]
-		},{
-      test: /\.m?js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: "babel-loader",
-      }
-    }]
+		}]
 	},
 	plugins: [
-    new HtmlWebpackPlugin({
-		  template: 'src/index.html'
-    }), 
-    new CleanWebpackPlugin(['dist']),
-    new webpack.HotModuleReplacementPlugin()
-  ],
+		new HtmlWebpackPlugin({
+			template: 'src/index.html'
+		}), 
+		new CleanWebpackPlugin(['dist']),
+		new webpack.HotModuleReplacementPlugin()
+	],
+  //optimization在production的环境下可以删除不用
+  // optimization:{
+  //   usedExports:true,
+  // },
 	output: {
-    publicPath:'/',//表示所有打包生成的文件之间的引用前面都加一个根路径
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist')
 	}
