@@ -49,7 +49,7 @@ module.exports = {
 	},
   output: {
 		filename: '[name].js',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, '../dist'),//打包生成的文件放在webpack.commom.js的上一层目录
 	},
   plugins: [
 		new HtmlWebpackPlugin({
