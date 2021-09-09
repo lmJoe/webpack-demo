@@ -1,22 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require('webpack');
-
 module.exports = {
-	mode: 'production',
-	devtool: 'cheap-module-eval-source-map',
-	entry: {
+  entry: {
 		main: './src/index.js'
 	},
-	devServer: {
-		contentBase: './dist',
-		open: true,
-		port: 8080,
-		hot: true,
-		hotOnly: true
-	},
-	module: {
+  module: {
 		rules: [{ 
 			test: /\.js$/, 
 			exclude: /node_modules/, 
@@ -58,19 +47,14 @@ module.exports = {
 			]
 		}]
 	},
-	plugins: [
+  output: {
+		filename: '[name].js',
+		path: path.resolve(__dirname, 'dist')
+	},
+  plugins: [
 		new HtmlWebpackPlugin({
 			template: 'src/index.html'
 		}), 
-		new CleanWebpackPlugin(['dist']),
-		new webpack.HotModuleReplacementPlugin()
+		new CleanWebpackPlugin(['dist'])
 	],
-  //optimization在production的环境下可以删除不用
-  // optimization:{
-  //   usedExports:true,
-  // },
-	output: {
-		filename: '[name].js',
-		path: path.resolve(__dirname, 'dist')
-	}
 }

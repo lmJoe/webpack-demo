@@ -1,11 +1,12 @@
 {
   "name": "lesson",
-  "sideEffects":false,
+  "sideEffects": false,
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "dev": "webpack-dev-server --config ./build/webpack.dev.js",
+    "build": "webpack --config ./build/webpack.prod.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,7 +29,8 @@
     "url-loader": "^1.1.2",
     "webpack-cli": "^3.1.2",
     "webpack-dev-middleware": "^3.4.0",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.10",
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
