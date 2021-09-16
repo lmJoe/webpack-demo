@@ -7,7 +7,7 @@
 import _ from 'lodash';
 //业务逻辑
 function getComponent() {
-  return import('lodash').then(({ default:_ })=>{
+  return import(/*webpackChunkName:"lodash"*/'lodash').then(({ default:_ })=>{
     var element = document.createElement('div');
     element.innerHtml = _.join(['A','B','C'],'-');
     return element;
