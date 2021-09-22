@@ -38,10 +38,14 @@ module.exports = {
   //做代码分割的配置
   optimization:{
     usedExports:true,
+    runtimeChunk:{
+      name:'runtime',//针对webpack4的老版本
+    },
     splitChunks: {
       chunks: 'all',//async只在做代码分割时只对异步代码生效 all 则会对同步代码和异步代码一起做分割 initial 只对同步代码做代码分割
     }
   },
+  preformance:false,
   output: {
 		filename: '[name].js',
     chunkFilename:'[name].chunk.js',

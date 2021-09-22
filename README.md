@@ -1,40 +1,13 @@
-CSS 文件的代码分割
+Webpack 与浏览器缓存( Caching )
 
-chunkfilename和filename的区别:
-mini-css-extract-plugin插件，在webpack中对引入的css文件进行代码分割
-此插件缺陷：此插件不支持模块热更新
-安装此插件：npm install --save-dev mini-css-extract-plugin，并且引入，然后做module的配置
-给线上环境配置使用mini-css-extract-plugin的方法
+根据上图中打包后的出口文件名可知：
+打包生成的新的文件的名字没有变，上传正式环境后，用户刷新页面，发现本地已经有缓存了，就不用会新上传的新的文件。
+解决用户浏览器缓存的问题：
 
-此处的css配置删除，
+需要在output中filename后面的配置中制定根据内容生成的hash值作为文件名如[name].[contenthash].js
+则打包后生成的文件名
 
-在开发环境中重新配置，还是需要使用style-loader的方法
+用户只需要更新有变化的代码。没有变化的代码，则还是用本地缓存，
+以上针对webpack4新版本
+如果当前webpack版本为webpack4的老版本则需要在webpack.common.js文件中，在optimization对象中配置runtimeChunk:{name:'runtime'}.则打包出来的文件会相比新版本多出一个runtime的文件，在dist文件夹中，main文件为业务逻辑文件，vendors文件为引入的插件的node_module的文件，runtime则是这两个文件相关联的文件
 
-如何针对某一些模块不做tree shaking
-
-将此处的usedExports剪切出来放入webpack.common.js文件中
-
-
-
-在做打包即可看到
-
-
-
-以上配置意义为针对css文件不做tree shaking
-一个文件即将被一个页面引用的时候，会走MiniCssExtractPlugin中filename。
-如果是间接引入到页面中的一个文件，那就会走chunkFilename
-安装Css压缩插件 npm install optimize-css-assets-webpack-plugin -D
-创建一个新的style1.css文件作为css压缩插件的调节样式
-
-安装成功后引入webpack.prod.js文件作配置
-
-运行打包后
-
-假如一个开发文件中有多个入口文件，希望所有的入口文件引入的css文件都能打包生成到一个css文件中
-做法：使用cacheGroups配置项中
-只要打包发现样式文件后缀为css的文件，不管是同步还是异步都统一打包到styles的文件中，
-
-enforce：true 忽略掉默认的参数
-假如一个开发文件中有多个入口文件，希望根据入口的不同把css文件打包到不用的css文件中。如有两个入口文件
-
-main1文件和mian文件都打包引入不同的mian.css和mian1.css文件，这块配置也使用cacheGroups配置项中

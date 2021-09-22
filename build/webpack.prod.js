@@ -4,7 +4,7 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const commonConfig = require('./webpack.common.js');
 const prodConfig = {
 	mode: 'production',
-	devtool: 'cheap-module-source-map',
+	// devtool: 'cheap-module-source-map',
   module:{
     rules:[
       {
@@ -38,6 +38,10 @@ const prodConfig = {
       filename:'[name].css',
       chunkFilename:'[name].chunk.css',
     })
-  ]
+  ],
+  output:{
+    filename:'[name].[contenthash].js',//[contenthash]是根据内容产生的hash字符串
+    chunkFilename:'[name].[contenthash].js',
+  }
 }
 module.exports = merge(commonConfig,prodConfig);
