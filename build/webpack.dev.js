@@ -11,12 +11,33 @@ const devConfig = {
 		hot: true,
 		// hotOnly: true
 	},
+  module:{
+    rules:[
+      {
+        test: /\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader, 
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2
+            }
+          },
+          'sass-loader',
+          'postcss-loader'
+        ]
+      }, {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader'
+        ]
+      }
+    ]
+  },
 	plugins: [
 		new webpack.HotModuleReplacementPlugin()
 	],
-  //optimization在production的环境下可以删除不用
-  optimization:{
-    usedExports:true,
-  },
 }
 module.exports = merge(commonConfig,devConfig);
